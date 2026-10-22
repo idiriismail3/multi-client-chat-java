@@ -1,0 +1,21 @@
+@startuml
+node "Server Computer" as server {
+  artifact "JavaFX Server Dashboard" as serverUI
+  artifact "ChatServer model" as serverModel
+  serverUI --> serverModel : in-process call
+  database "Connected client handlers" as sessions
+  serverModel --> sessions
+}
+node "Client Computer 1" as client1 {
+  artifact "JavaFX Client UI" as clientUI1
+  artifact "ChatClient model" as clientModel1
+  clientUI1 --> clientModel1 : in-process call
+}
+node "Client Computer N" as clientN {
+  artifact "JavaFX Client UI" as clientUIN
+  artifact "ChatClient model" as clientModelN
+  clientUIN --> clientModelN : in-process call
+}
+clientModel1 <--> serverModel : TCP/IP :3000
+clientModelN <--> serverModel : TCP/IP :3000
+@enduml

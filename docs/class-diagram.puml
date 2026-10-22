@@ -1,0 +1,34 @@
+@startuml
+skinparam classAttributeIconSize 0
+class TCPServer {
+  +start(Stage)
+  +main(String[])
+}
+class ChatServer {
+  -int port
+  -Set<Handler> clients
+  +start()
+  +stop()
+}
+class Handler {
+  -Socket socket
+  -String username
+  +run()
+  +send(String)
+}
+class TCPClient {
+  +start(Stage)
+  +main(String[])
+}
+class ChatClient {
+  -String host
+  -int port
+  +connect(String, Consumer, Consumer)
+  +send(String)
+  +close()
+}
+TCPServer --> ChatServer : controls
+ChatServer *-- Handler : concurrent client sessions
+TCPClient --> ChatClient : uses
+ChatClient ..> ChatServer : TCP over Socket
+@enduml
